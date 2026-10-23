@@ -1,0 +1,12 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "BCPG MedQuest BD",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "MedQuest BD",
+  "start_url": "/",
+  "theme_color": "#0d9488",
+  "description": "Medical admission MCQ practice app for Bangladeshi students"
+}
