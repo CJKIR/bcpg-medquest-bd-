@@ -1,1 +1,22 @@
-{ "background_color": "#ffffff", "dir": "ltr", "display": "standalone", "name": "BCPG MedQuest BD", "orientation": "any", "scope": "/bcpg-medquest-bd-/", "short_name": "MedQuest BD", "start_url": "/bcpg-medquest-bd-/", "theme_color": "#0d9488", "description": "Medical admission MCQ practice app for Bangladeshi students" }
+{
+"id": "/bcpg-medquest-bd-/",
+"name": "BCPG MedQuest BD",
+"short_name": "MedQuest BD",
+"description": "Medical admission MCQ practice app for Bangladeshi students",
+"start_url": "/bcpg-medquest-bd-/",
+"scope": "/bcpg-medquest-bd-/",
+"display": "standalone",
+"orientation": "any",
+"dir": "ltr",
+"lang": "en",
+"background_color": "#ffffff",
+"theme_color": "#0d9488",
+"icons": [
+{
+"src": "/bcpg-medquest-bd-/launchericon-512x512.png",
+"sizes": "512x512",
+"type": "image/png",
+"purpose": "any"
+}
+]
+}
