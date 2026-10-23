@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123b70">
+<title>BCPG MedQuest BD</title>
+<style>
+:root{--navy:#123b70;--blue:#2463eb;--bg:#f3f6fb;--ink:#172033;--muted:#667085;--green:#16845b;--line:#e3e9f2}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans Bengali",sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,#123b70,#2463eb);color:white;padding:22px 18px 25px;border-radius:0 0 24px 24px}
+.brand{font-size:12px;letter-spacing:1.5px;opacity:.85;font-weight:800}.title{font-size:25px;font-weight:850;margin:7px 0}.subtitle{opacity:.9;font-size:14px}
+main{max-width:760px;margin:auto;padding:16px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:-3px}
+.stat,.card,.question{background:white;border:1px solid var(--line);border-radius:15px;padding:14px;box-shadow:0 3px 12px #122b4b08}
+.stat strong{display:block;font-size:20px;color:var(--navy)}.stat span{font-size:12px;color:var(--muted)}
+h2{font-size:18px;margin:23px 0 12px}
+.categories{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.cat{border:1px solid var(--line);border-radius:15px;background:#fff;padding:15px;text-align:left;cursor:pointer;min-height:102px;color:var(--ink)}
+.cat .emoji{font-size:25px}.cat strong{display:block;margin:5px 0 2px}.cat small{color:var(--muted)}
+button{font:inherit}.primary{border:0;border-radius:11px;padding:12px 15px;background:var(--blue);color:#fff;font-weight:750;cursor:pointer}
+.secondary{border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:#fff;cursor:pointer}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.hidden{display:none!important}.muted{color:var(--muted);font-size:13px}
+.question{margin:12px 0}.qtop{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:12px}
+.qtext{font-size:17px;font-weight:750;line-height:1.55;margin:14px 0}
+.option{display:block;width:100%;text-align:left;padding:12px;margin:8px 0;border:1px solid var(--line);border-radius:11px;background:white;cursor:pointer}
+.option.selected{border-color:var(--blue);background:#eef4ff}.option.correct{border-color:#16845b;background:#e9f8f0}.option.wrong{border-color:#d04444;background:#fff0f0}
+.explain{padding:11px;background:#f3f7fc;border-radius:10px;margin-top:10px;font-size:14px;line-height:1.5}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:25px 10px}
+@media(min-width:600px){.categories{grid-template-columns:repeat(3,1fr)}header{padding-left:max(22px,calc((100% - 720px)/2));padding-right:max(22px,calc((100% - 720px)/2))}}
+</style>
+</head>
+<body>
+<header><div class="brand">BCPG • MEDICAL ADMISSION PREP</div><div class="title">BCPG MedQuest BD</div><div class="subtitle">প্রশ্ন অনুশীলন করো, ব্যাখ্যা থেকে শেখো, নিজের অগ্রগতি দেখো।</div></header>
+<main>
+<section id="home">
+<div class="stats">
+<div class="stat"><strong id="attempted">0</strong><span>উত্তর দেওয়া</span></div>
+<div class="stat"><strong id="accuracy">—</strong><span>সঠিকতার হার</span></div>
+<div class="stat"><strong id="savedCount">0</strong><span>বুকমার্ক</span></div>
+</div>
+<h2>বিষয় বেছে নাও</h2>
+<div class="categories">
+<button class="cat" onclick="openSubject('Biology')"><span class="emoji">🧬</span><strong>Biology</strong><small>জীববিজ্ঞান MCQ</small></button>
+<button class="cat" onclick="openSubject('Physics')"><span class="emoji">⚛️</span><strong>Physics</strong><small>পদার্থবিজ্ঞান MCQ</small></button>
+<button class="cat" onclick="openSubject('Chemistry')"><span class="emoji">🧪</span><strong>Chemistry</strong><small>রসায়ন MCQ</small></button>
+<button class="cat" onclick="openSubject('General GK')"><span class="emoji">🌍</span><strong>সাধারণ GK</strong><small>বাংলাদেশ ও আন্তর্জাতিক স্থায়ী তথ্য</small></button>
+<button class="cat" onclick="openSubject('Current Affairs')"><span class="emoji">📰</span><strong>সাম্প্রতিক GK</strong><small>সাম্প্রতিক ঘটনা ও আপডেট</small></button>
+<button class="cat" onclick="openSubject('English')"><span class="emoji">🔤</span><strong>English</strong><small>Grammar ও Vocabulary MCQ</small></button>
+<button class="cat" onclick="openSubject('Mental Ability')"><span class="emoji">🧠</span><strong>Mental Ability</strong><small>যুক্তি ও বিশ্লেষণ</small></button>
+<button class="cat" onclick="showBookmarks()"><span class="emoji">🔖</span><strong>বুকমার্ক</strong><small>সংরক্ষিত প্রশ্ন</small></button>
+</div>
+<div class="card" style="margin-top:15px"><div class="row"><div><strong>⚡ দ্রুত মডেল টেস্ট</strong><div class="muted">৫টি প্রশ্ন • মিশ্র বিষয়</div></div><button class="primary" onclick="startMixed()">শুরু করো</button></div></div>
+</section>
+<section id="quiz" class="hidden">
+<div class="row"><button class="secondary" onclick="goHome()">← হোম</button><span class="muted" id="progress"></span><span class="muted" id="timer"></span></div>
+<div id="questionArea"></div>
+<div class="row"><button class="secondary" id="bookmarkBtn" onclick="toggleBookmark()">☆ বুকমার্ক</button><button class="primary" id="nextBtn" onclick="nextQuestion()" disabled>পরের প্রশ্ন →</button></div>
+</section>
+<section id="result" class="hidden">
+<div class="card" style="text-align:center;margin-top:20px"><div style="font-size:42px">🎉</div><h2 style="margin-top:5px">টেস্ট শেষ!</h2><p id="scoreText"></p><p class="muted" id="resultDetail"></p><button class="primary" onclick="goHome()">হোমে ফিরে যাও</button> <button class="secondary" onclick="startMixed()">আবার টেস্ট</button></div>
+</section>
+</main>
+<footer>শিক্ষামূলক প্রোটোটাইপ • প্রশ্নগুলো নমুনা; প্রকাশের আগে বিষয়বিশেষজ্ঞ দিয়ে যাচাই করাও।</footer>
+<script>
+const bank = [
+{subject:'Biology',q:'কোষের শক্তিঘর বলা হয় কোন অঙ্গাণুকে?',opts:['নিউক্লিয়াস','মাইটোকন্ড্রিয়া','রাইবোসোম','গলজি বডি'],a:1,e:'মাইটোকন্ড্রিয়ায় কোষের অধিকাংশ ATP উৎপাদিত হয়।'},
+{subject:'Biology',q:'DNA-এর পূর্ণরূপ কোনটি?',opts:['Deoxyribonucleic acid','Dinucleic acid','Ribonuclear acid','Deoxyribose nitrogen acid'],a:0,e:'DNA-এর পূর্ণরূপ Deoxyribonucleic acid।'},
+{subject:'Biology',q:'মানবদেহে রক্ত পরিশোধনে প্রধান ভূমিকা রাখে কোন অঙ্গ?',opts:['হৃদপিণ্ড','ফুসফুস','বৃক্ক','অগ্ন্যাশয়'],a:2,e:'বৃক্ক রক্ত থেকে বর্জ্য পদার্থ ছেঁকে প্রস্রাব তৈরিতে সাহায্য করে।'},
+{subject:'Physics',q:'বলের SI একক কোনটি?',opts:['জুল','ওয়াট','নিউটন','প্যাসকেল'],a:2,e:'বলের SI একক নিউটন (N)।'},
+{subject:'Physics',q:'আলোর বেগ শূন্যস্থানে প্রায় কত?',opts:['3×10⁶ m/s','3×10⁸ m/s','3×10⁵ m/s','3×10¹⁰ m/s'],a:1,e:'শূন্যস্থানে আলোর বেগ প্রায় 3×10⁸ মিটার/সেকেন্ড।'},
+{subject:'Physics',q:'বৈদ্যুতিক রোধের SI একক কী?',opts:['অ্যাম্পিয়ার','ভোল্ট','ওহম','কুলম্ব'],a:2,e:'বৈদ্যুতিক রোধের একক ওহম (Ω)।'},
+{subject:'Chemistry',q:'২৫°C তাপমাত্রায় বিশুদ্ধ পানির pH প্রায় কত?',opts:['৩','৫','৭','৯'],a:2,e:'২৫°C তাপমাত্রায় বিশুদ্ধ পানি নিরপেক্ষ; pH প্রায় ৭।'},
+{subject:'Chemistry',q:'NaCl যৌগে কোন ধরনের বন্ধন থাকে?',opts:['আয়নিক','ধাতব','হাইড্রোজেন','শুধু সমযোজী'],a:0,e:'সোডিয়াম ও ক্লোরিনের মধ্যে ইলেকট্রন স্থানান্তরের ফলে আয়নিক বন্ধন গঠিত হয়।'},
+{subject:'Chemistry',q:'পরমাণুর নিউক্লিয়াসে থাকে—',opts:['শুধু ইলেকট্রন','প্রোটন ও নিউট্রন','শুধু প্রোটন ও ইলেকট্রন','শুধু নিউট্রন ও ইলেকট্রন'],a:1,e:'সাধারণভাবে নিউক্লিয়াসে প্রোটন ও নিউট্রন থাকে; হাইড্রোজেন-১-এর নিউক্লিয়াসে শুধু প্রোটন থাকে।'},
+{subject:'General GK',q:'বাংলাদেশের জাতীয় সংসদ ভবনের স্থপতি কে?',opts:['মাজহারুল ইসলাম','লুই আই কান','এফ আর খান','হামিদুর রহমান'],a:1,e:'জাতীয় সংসদ ভবনের নকশা করেন স্থপতি লুই আই কান।'},
+{subject:'General GK',q:'বাংলাদেশের স্বাধীনতা দিবস কোন তারিখে?',opts:['২১ ফেব্রুয়ারি','২৬ মার্চ','১৬ ডিসেম্বর','১৪ এপ্রিল'],a:1,e:'বাংলাদেশের স্বাধীনতা দিবস ২৬ মার্চ।'},
+{subject:'General GK',q:'জাতিসংঘ প্রতিষ্ঠিত হয় কোন সালে?',opts:['১৯১৯','১৯৪৫','১৯৫২','১৯৬১'],a:1,e:'জাতিসংঘ ১৯৪৫ সালে প্রতিষ্ঠিত হয়।'},
+{subject:'Current Affairs',q:'সাম্প্রতিক ঘটনাবলির MCQ অনুশীলনের সময় কোন বিষয়টি সবচেয়ে গুরুত্বপূর্ণ?',opts:['ঘটনার তারিখ ও নির্ভরযোগ্য সূত্র যাচাই','শুধু সামাজিক মাধ্যমের পোস্ট দেখা','পুরোনো তথ্যকে নতুন বলা','সূত্র না দেখে মুখস্থ করা'],a:0,e:'সাম্প্রতিক GK দ্রুত বদলায়। প্রতিটি তথ্যের তারিখ এবং নির্ভরযোগ্য সূত্র যাচাই করা জরুরি। এটি শেখার পদ্ধতি-সংক্রান্ত নমুনা প্রশ্ন; বর্তমান ঘটনার খবর নয়।'},
+{subject:'Current Affairs',q:'কোন ধরনের তথ্যকে “সাম্প্রতিক সাধারণ জ্ঞান” বলা হয়?',opts:['শুধু প্রাচীন ইতিহাস','সাম্প্রতিক ঘটনা, নিয়োগ, পুরস্কার ও নীতিগত পরিবর্তন','শুধু গাণিতিক সূত্র','শুধু ব্যাকরণ'],a:1,e:'সাম্প্রতিক GK-তে সাম্প্রতিক জাতীয়-আন্তর্জাতিক ঘটনা, পুরস্কার, নিয়োগ, অর্থনীতি ও নীতিগত পরিবর্তন অন্তর্ভুক্ত হয়।'},
+{subject:'English',q:'Choose the correct synonym of “Rapid”.',opts:['Slow','Fast','Weak','Late'],a:1,e:'“Rapid” means fast or quick (দ্রুত)।'},
+{subject:'English',q:'Choose the correct sentence.',opts:['She go to college every day.','She goes to college every day.','She going to college every day.','She gone to college every day.'],a:1,e:'Present simple tense-এ third-person singular subject “she”-এর সঙ্গে verb-এর শেষে সাধারণত -s/-es হয়।'},
+{subject:'English',q:'Fill in the blank: He is interested ___ biology.',opts:['on','at','in','for'],a:2,e:'সঠিক phrase হলো “interested in”।'},
+{subject:'English',q:'What is the plural of “criterion”?',opts:['Criterions','Criteria','Criterias','Criterion'],a:1,e:'“Criterion”-এর বহুবচন “criteria”।'},
+{subject:'Mental Ability',q:'ধারাটির পরের সংখ্যা কত? ২, ৬, ১২, ২০, ৩০, ?',opts:['৩৬','৪০','৪২','৪৪'],a:2,e:'পার্থক্যগুলো ৪, ৬, ৮, ১০; পরের পার্থক্য ১২। তাই ৩০+১২=৪২।'},
+{subject:'Mental Ability',q:'সব গোলাপ ফুল। কিছু ফুল দ্রুত ঝরে যায়। নিচের কোন সিদ্ধান্তটি নিশ্চিত?',opts:['সব গোলাপ দ্রুত ঝরে যায়','কোনো গোলাপ ঝরে যায় না','সব গোলাপই ফুল','সব ফুল গোলাপ'],a:2,e:'প্রথম বাক্যেই বলা আছে সব গোলাপ ফুল; অন্য সিদ্ধান্তগুলো নিশ্চিত নয়।'},
+{subject:'Mental Ability',q:'A, C, E, G, ? — পরের অক্ষর কোনটি?',opts:['H','I','J','K'],a:1,e:'প্রতিবার একটি অক্ষর বাদ দিয়ে এগোনো হয়েছে: A, C, E, G, I।'}
+];
+let current=[],idx=0,answered=false,score=0,mode='subject',started=0,clock=null;
+let stats=JSON.parse(localStorage.getItem('bcpq_stats')||'{"attempted":0,"correct":0}');
+let saved=JSON.parse(localStorage.getItem('bcpq_saved')||'[]');
+function persist(){localStorage.setItem('bcpq_stats',JSON.stringify(stats));localStorage.setItem('bcpq_saved',JSON.stringify(saved));updateStats()}
+function updateStats(){document.getElementById('attempted').textContent=stats.attempted;document.getElementById('accuracy').textContent=stats.attempted?Math.round(stats.correct/stats.attempted*100)+'%':'—';document.getElementById('savedCount').textContent=saved.length}
+function openSubject(s){mode='subject';begin(bank.filter(x=>x.subject===s),s)}
+function startMixed(){mode='mixed';let arr=[...bank];current=arr.sort(()=>Math.random()-.5).slice(0,5);begin(current,'মিশ্র মডেল টেস্ট')}
+function begin(list,title){current=list;idx=0;score=0;started=Date.now();document.getElementById('home').classList.add('hidden');document.getElementById('result').classList.add('hidden');document.getElementById('quiz').classList.remove('hidden');document.getElementById('progress').textContent=title;render();if(clock)clearInterval(clock);clock=setInterval(()=>{let sec=Math.floor((Date.now()-started)/1000);document.getElementById('timer').textContent=Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0')},1000)}
+function render(){answered=false;let q=current[idx];document.getElementById('nextBtn').disabled=true;document.getElementById('nextBtn').textContent=idx===current.length-1?'ফলাফল দেখো':'পরের প্রশ্ন →';document.getElementById('bookmarkBtn').textContent=saved.includes(q.q)?'★ বুকমার্ক করা':'☆ বুকমার্ক';document.getElementById('progress').textContent=(mode==='mixed'?'মডেল টেস্ট':q.subject)+' • '+(idx+1)+'/'+current.length;
+let area=document.getElementById('questionArea');area.innerHTML=`<div class="question"><div class="qtop"><span>${q.subject}</span><span>MCQ</span></div><div class="qtext">${q.q}</div><div id="opts"></div><div id="explain"></div></div>`;
+q.opts.forEach((o,i)=>{let b=document.createElement('button');b.className='option';b.textContent=String.fromCharCode(65+i)+'. '+o;b.onclick=()=>choose(i);document.getElementById('opts').appendChild(b)})}
+function choose(n){if(answered)return;answered=true;let q=current[idx];let buttons=[...document.querySelectorAll('.option')];buttons.forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('correct');if(i===n&&n!==q.a)b.classList.add('wrong')});if(n===q.a)score++;stats.attempted++;if(n===q.a)stats.correct++;persist();document.getElementById('explain').innerHTML=`<div class="explain"><strong>${n===q.a?'সঠিক উত্তর!':'সঠিক উত্তর: '+String.fromCharCode(65+q.a)+'. '+q.opts[q.a]}</strong><br>${q.e}</div>`;document.getElementById('nextBtn').disabled=false}
+function nextQuestion(){if(!answered)return;if(idx<current.length-1){idx++;render()}else{clearInterval(clock);document.getElementById('quiz').classList.add('hidden');document.getElementById('result').classList.remove('hidden');document.getElementById('scoreText').textContent=`তোমার স্কোর: ${score}/${current.length}`;document.getElementById('resultDetail').textContent=`সঠিক উত্তর ${score}টি • চেষ্টা করা হয়েছে ${current.length}টি`}}
+function toggleBookmark(){let q=current[idx];if(saved.includes(q.q))saved=saved.filter(x=>x!==q.q);else saved.push(q.q);persist();document.getElementById('bookmarkBtn').textContent=saved.includes(q.q)?'★ বুকমার্ক করা':'☆ বুকমার্ক'}
+function showBookmarks(){let list=bank.filter(q=>saved.includes(q.q));if(!list.length){alert('এখনও কোনো প্রশ্ন বুকমার্ক করা হয়নি।');return}begin(list,'বুকমার্ক করা প্রশ্ন');mode='bookmarks'}
+function goHome(){if(clock)clearInterval(clock);document.getElementById('quiz').classList.add('hidden');document.getElementById('result').classList.add('hidden');document.getElementById('home').classList.remove('hidden');updateStats()}
+updateStats();
+</script>
+</body></html>
